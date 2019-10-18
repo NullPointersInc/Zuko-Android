@@ -16,7 +16,7 @@ class InfoPage extends StatelessWidget {
         width: 100,
         height: 100,
         child: Image(
-          image: AssetImage("assets/logo.jpg"),
+          image: AssetImage("assets/logo.png"),
         ),
       ),
       applicationLegalese: '© Null Pointers INC, {{ year }}',
