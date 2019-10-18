@@ -1,7 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:zuko/pages/aboutPage.dart';
 import 'package:zuko/pages/cameraPage.dart';
+import 'package:zuko/pages/infoPage.dart';
 import 'package:zuko/pages/mainPage.dart';
 
 void main() => runApp(MyApp());
@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _pageIndex = 1;
 
   final CameraPage _cameraPage = CameraPage();
-  final AboutPage _aboutPage = AboutPage();
+  final InfoPage _infoPage = InfoPage();
   final MainPage _mainPage = MainPage();
 
   Widget _showPage = new MainPage();
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return _mainPage;
         break;
       case 2:
-        return _aboutPage;
+        return _infoPage;
         break;
       default:
         return Container(
@@ -83,11 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.black38,
         color: Colors.black45,

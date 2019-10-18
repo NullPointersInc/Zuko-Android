@@ -4,8 +4,20 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Container(
-      child: Column(
+    return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.grey,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text('Home'),
+        ),
         // Column is also a layout widget. It takes a list of children and
         // arranges them vertically. By default, it sizes itself to fit its
         // children horizontally, and tries to be as tall as its parent.
@@ -20,14 +32,13 @@ class MainPage extends StatelessWidget {
         // center the children vertically; the main axis here is the vertical
         // axis because Columns are vertical (the cross axis would be
         // horizontal).
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Image.asset(
+        body: Center(
+          child: Image.asset(
             "assets/fire.gif",
             height: 350.0,
             width: 350.0,
-          )
-        ],
+          ),
+        ),
       ),
     );
   }
