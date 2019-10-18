@@ -1,5 +1,11 @@
+import 'dart:io';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:zuko/pages/aboutPage.dart';
+import 'package:zuko/pages/cameraPage.dart';
+import 'package:zuko/pages/mainPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -40,6 +46,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _pageIndex = 1;
+
+  final CameraPage _cameraPage = CameraPage();
+  final AboutPage _aboutPage = AboutPage();
+  final MainPage _mainPage = MainPage();
+
+  Widget _showPage = new MainPage();
+
+  Widget _pageChooser(int page){
+    switch(page) {
+      case 0:
+        return _cameraPage;
+        break;
+      case 1:
+        return _mainPage;
+        break;
+      case 2:
+        return _aboutPage;
+        break;
+      default:
+        return Container(
+          child: new Center(
+            child: new Text(
+              'No page found',
+              style: new TextStyle(fontSize: 30),
+            ),
+          )
+        );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,45 +95,26 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.black38,
         color: Colors.black45,
         buttonBackgroundColor: Colors.black54,
-        index: 2,
+        index: _pageIndex,
         animationDuration: Duration(milliseconds: 300),
         items: <Widget>[
-          Icon(Icons.category, size: 30),
+          //Icon(Icons.category, size: 30),
           Icon(Icons.camera_alt, size: 30),
           Icon(Icons.home, size: 30),
-          Icon(Icons.star, size: 30),
+          //Icon(Icons.star, size: 30),
           Icon(Icons.person, size: 30),
         ],
-        onTap: (index) {
-          //Handle button tap
+        onTap: (int tapped) {
+          setState(() {
+            _showPage = _pageChooser(tapped);
+          });
         },
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(
-              "assets/fire.gif",
-              height: 350.0,
-              width: 350.0,
-            )
-          ],
+        child: Center(
+          child: _showPage,
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
