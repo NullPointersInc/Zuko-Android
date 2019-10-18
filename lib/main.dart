@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:zuko/pages/aboutPage.dart';
 import 'package:zuko/pages/cameraPage.dart';
@@ -96,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Colors.black45,
         buttonBackgroundColor: Colors.black54,
         index: _pageIndex,
+        height: 50,
         animationDuration: Duration(milliseconds: 300),
         items: <Widget>[
           //Icon(Icons.category, size: 30),
