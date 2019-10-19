@@ -51,6 +51,7 @@ class InfoPage extends StatelessWidget {
           icon: Icon(Icons.favorite),
         ),
       ],
+
     );
 
     return MaterialApp(
