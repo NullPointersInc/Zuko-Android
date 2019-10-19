@@ -13,7 +13,7 @@ class MapPage extends StatefulWidget {
 class _MapState extends State<MapPage> {
   Completer<GoogleMapController> _controller = Completer();
 
-  static const LatLng _center = const LatLng(45.521563, -122.677433);
+  static const LatLng _center = const LatLng(12.8903909, 77.6421465);
 
   final Set<Marker> _markers = {};
 
@@ -73,7 +73,7 @@ class _MapState extends State<MapPage> {
               onMapCreated: _onMapCreated,
               initialCameraPosition: CameraPosition(
                 target: _center,
-                zoom: 11.0,
+                zoom: 15.0,
               ),
               mapType: _currentMapType,
               markers: _markers,

@@ -7,7 +7,6 @@ import 'package:zuko/pages/mainPage.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'dart:async';
 
 import 'package:zuko/pages/mapPage.dart';
 
@@ -40,6 +39,8 @@ class _MyAppState extends State<MyApp> {
     var platform = new InitializationSettings(android, ios);
     flutterLocalNotificationsPlugin.initialize(platform);
 
+    final MapPage _mapPage = MapPage();
+
     firebaseMessaging.configure(
       onLaunch: (Map<String, dynamic> msg) {
           var data = msg['data'];
@@ -54,8 +55,7 @@ class _MyAppState extends State<MyApp> {
               textColor: Colors.white,
               fontSize: 16.0
           );
-//
-//          navigateToMap(latData);
+          _mapPage;
       },
       onResume: (Map<String, dynamic> msg) {
         var data = msg['data'];
@@ -70,8 +70,7 @@ class _MyAppState extends State<MyApp> {
             textColor: Colors.white,
             fontSize: 16.0
         );
-//        final latData = Data(lat: lat,long: long);
-//        navigateToMap(latData);
+        _mapPage;
       },
       onMessage: (Map<String, dynamic> msg) {
         var data = msg['data'];
@@ -86,8 +85,7 @@ class _MyAppState extends State<MyApp> {
             textColor: Colors.white,
             fontSize: 16.0
         );
-//        final latData = Data(lat: lat,long: long);
-//        navigateToMap(latData);
+        _mapPage;
       },
     );
 
@@ -101,19 +99,8 @@ class _MyAppState extends State<MyApp> {
     firebaseMessaging.getToken().then((token) {
       update(token);
     });
-
-
-
   }
-//  navigateToMap(Data data){
-//    Navigator.push(
-//      context,
-//      MaterialPageRoute(
-//          builder: (context) => MapPage(
-//            data: data,
-//          )),
-//    );
-//  }
+
   showNotification(Map<String, dynamic> msg) async {
     var android = new AndroidNotificationDetails(
       'sdffds dsffds',
@@ -173,6 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final CameraPage _cameraPage = CameraPage();
   final InfoPage _infoPage = InfoPage();
   final MainPage _mainPage = MainPage();
+  final MapPage _mapPage = MapPage();
 
   Widget _showPage = new MainPage();
 
@@ -186,6 +174,9 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case 2:
         return _infoPage;
+        break;
+      case 3:
+        return _mapPage;
         break;
       default:
         return Container(
@@ -219,8 +210,8 @@ class _MyHomePageState extends State<MyHomePage> {
           //Icon(Icons.category, size: 30),
           Icon(Icons.camera_alt, size: 30),
           Icon(Icons.home, size: 30),
-          //Icon(Icons.star, size: 30),
           Icon(Icons.person, size: 30),
+          Icon(Icons.map, size: 30),
         ],
         onTap: (int tapped) {
           setState(() {
