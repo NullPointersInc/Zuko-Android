@@ -74,6 +74,7 @@ class _MyAppState extends State<MyApp> {
         _mapPage;
       },
       onMessage: (Map<String, dynamic> msg) {
+        showNotification(msg);
         var data = msg['data'];
           lat = data['lat'];
           long = data['long'];
@@ -108,10 +109,14 @@ class _MyAppState extends State<MyApp> {
       "CHANNLE NAME",
       "channelDescription",
     );
+    var data = msg['notification'];
+    String title = data['title'];
+    String body = data['body'];
+
     var iOS = new IOSNotificationDetails();
     var platform = new NotificationDetails(android, iOS);
     await flutterLocalNotificationsPlugin.show(
-        0, "This is title", "this is demo", platform);
+        0, title, body, platform);
   }
 
   update(String token) {
