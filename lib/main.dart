@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zuko/pages/cameraPage.dart';
 import 'package:zuko/pages/infoPage.dart';
 import 'package:zuko/pages/mainPage.dart';
@@ -8,22 +9,32 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:async';
 
+import 'package:zuko/pages/mapPage.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
+class Data {
+  double lat,long;
+  Data({this.lat, this.long});
+}
 class _MyAppState extends State<MyApp> {
   String textValue = 'Hello World !';
   FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   new FlutterLocalNotificationsPlugin();
+  double lat, long;
+  void fcmSubscribe() {
+    firebaseMessaging.subscribeToTopic('all');
+  }
 
   @override
   void initState() {
     super.initState();
-
+    fcmSubscribe();
     var android = new AndroidInitializationSettings('mipmap/ic_launcher');
     var ios = new IOSInitializationSettings();
     var platform = new InitializationSettings(android, ios);
@@ -31,16 +42,56 @@ class _MyAppState extends State<MyApp> {
 
     firebaseMessaging.configure(
       onLaunch: (Map<String, dynamic> msg) {
-        print(" onLaunch called ${(msg)}");
+          var data = msg['data'];
+          lat = double.parse(data['lat']);
+          long = double.parse(data['long']);
+          Fluttertoast.showToast(
+              msg: "Lat and long" + lat.toString() + " " + long.toString(),
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIos: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0
+          );
+//
+//          navigateToMap(latData);
       },
       onResume: (Map<String, dynamic> msg) {
-        print(" onResume called ${(msg)}");
+        var data = msg['data'];
+        lat = data['lat'];
+        long = data['long'];
+        Fluttertoast.showToast(
+            msg: "Lat and long" + lat.toString() + " " + long.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
+//        final latData = Data(lat: lat,long: long);
+//        navigateToMap(latData);
       },
       onMessage: (Map<String, dynamic> msg) {
-        showNotification(msg);
-        print(" onMessage called ${(msg)}");
+        var data = msg['data'];
+          lat = data['lat'];
+          long = data['long'];
+        Fluttertoast.showToast(
+            msg: "Lat and long" + lat.toString() + " " + long.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
+//        final latData = Data(lat: lat,long: long);
+//        navigateToMap(latData);
       },
     );
+
+
     firebaseMessaging.requestNotificationPermissions(
         const IosNotificationSettings(sound: true, alert: true, badge: true));
     firebaseMessaging.onIosSettingsRegistered
@@ -50,8 +101,19 @@ class _MyAppState extends State<MyApp> {
     firebaseMessaging.getToken().then((token) {
       update(token);
     });
-  }
 
+
+
+  }
+//  navigateToMap(Data data){
+//    Navigator.push(
+//      context,
+//      MaterialPageRoute(
+//          builder: (context) => MapPage(
+//            data: data,
+//          )),
+//    );
+//  }
   showNotification(Map<String, dynamic> msg) async {
     var android = new AndroidNotificationDetails(
       'sdffds dsffds',
