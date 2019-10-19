@@ -63,6 +63,9 @@ flutter:
   assets:
     - assets/fire.gif
     - assets/logo.png
+    - assets/onboarding0.png
+    - assets/onboarding1.png
+    - assets/onboarding2.png
     - CHANGELOG.md
     - CODE_OF_CONDUCT.md
     - CONTRIBUTING.md

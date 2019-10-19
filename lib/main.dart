@@ -9,6 +9,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:zuko/pages/mapPage.dart';
+import 'package:zuko/screens/onboarding_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -155,27 +156,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _pageIndex = 1;
+  int _pageIndex = 2;
 
   final CameraPage _cameraPage = CameraPage();
   final InfoPage _infoPage = InfoPage();
   final MainPage _mainPage = MainPage();
   final MapPage _mapPage = MapPage();
+  final OnboardingScreen _safetyPage = OnboardingScreen();
 
   Widget _showPage = new MainPage();
 
   Widget _pageChooser(int page){
     switch(page) {
       case 0:
-        return _cameraPage;
+        return _safetyPage;
         break;
       case 1:
-        return _mainPage;
+        return _cameraPage;
         break;
       case 2:
-        return _infoPage;
+        return _mainPage;
         break;
       case 3:
+        return _infoPage;
+        break;
+      case 4:
         return _mapPage;
         break;
       default:
@@ -207,7 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
         height: 50,
         animationDuration: Duration(milliseconds: 300),
         items: <Widget>[
-          //Icon(Icons.category, size: 30),
+          Icon(Icons.category, size: 30),
           Icon(Icons.camera_alt, size: 30),
           Icon(Icons.home, size: 30),
           Icon(Icons.person, size: 30),
