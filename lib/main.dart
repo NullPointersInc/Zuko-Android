@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zuko/pages/cameraPage.dart';
 import 'package:zuko/pages/infoPage.dart';
@@ -163,6 +164,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _pageIndex = 2;
 
+  FlutterTts flutterTts = new FlutterTts();
+  Future speak(String txt) async {
+    await flutterTts.setLanguage("en-US");
+    await flutterTts.setPitch(1);
+    await flutterTts.setSpeechRate(0.8);
+    await flutterTts.speak(txt);
+  }
   final CameraPage _cameraPage = CameraPage();
   final InfoPage _infoPage = InfoPage();
   final MainPage _mainPage = MainPage();
@@ -174,6 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _pageChooser(int page){
     switch(page) {
       case 0:
+        speak("Before you leave, prepare your home");
         return _safetyPage;
         break;
       case 1:

@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zuko/main.dart';
 import 'package:zuko/utilities/styles.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
+
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  final int _numPages = 3;
+  final int _numPages = 6;
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
 
@@ -21,6 +23,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return list;
   }
 
+  FlutterTts flutterTts = new FlutterTts();
+
+  Future speak(String txt) async{
+    await flutterTts.setLanguage("en-US");
+    await flutterTts.setPitch(1);
+    await flutterTts.setSpeechRate(0.8);
+    await flutterTts.speak(txt);
+
+  }
   Widget _indicator(bool isActive) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 150),
@@ -79,6 +90,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     physics: ClampingScrollPhysics(),
                     controller: _pageController,
                     onPageChanged: (int page) {
+                      switch (page){
+                        case 1: speak("If you see a fire, please report it");
+                        break;
+                        case 2: speak("Check  your vents");
+                        break;
+                        case 3: speak("Make it easy for firefighters");
+                        break;
+                        case 4: speak("Locate your evacuation kit");
+                        break;
+                        case 5: speak("Get to the safe zone");
+                        break;
+                      }
                       setState(() {
                         _currentPage = page;
                       });
@@ -151,6 +174,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 height: 300.0,
                                 width: 300.0,
                               ),
+
                             ),
                             SizedBox(height: 30.0),
                             Text(
@@ -160,6 +184,87 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             SizedBox(height: 15.0),
                             Text(
                               'Special fire prevention vents, such as those from BrandGuard, resist flames and embers and can help protect your home from wildfire damage',
+                              style: kSubtitleStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(40.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Center(
+                              child: Image(
+                                image: AssetImage(
+                                  'assets/onboarding0.png',
+                                ),
+                                height: 300.0,
+                                width: 300.0,
+                              ),
+                            ),
+                            SizedBox(height: 20.0),
+                            Text(
+                              'Make it easy for firefighters',
+                              style: kTitleStyle,
+                            ),
+                            SizedBox(height: 15.0),
+                            Text(
+                              'If your home is gated, leave the gate propped open to allow fire fighters easy access to your property',
+                              style: kSubtitleStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(40.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Center(
+                              child: Image(
+                                image: AssetImage(
+                                  'assets/onboarding1.png',
+                                ),
+                                height: 300.0,
+                                width: 300.0,
+                              ),
+                            ),
+                            SizedBox(height: 20.0),
+                            Text(
+                              'Locate your evacuation kits',
+                              style: kTitleStyle,
+                            ),
+                            SizedBox(height: 15.0),
+                            Text(
+                              'Make sure your evacuation kits are ready to go – for yourself, your family and your pets – in case you need to leave.',
+                              style: kSubtitleStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(40.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Center(
+                              child: Image(
+                                image: AssetImage(
+                                  'assets/onboarding2.png',
+                                ),
+                                height: 300.0,
+                                width: 300.0,
+                              ),
+                            ),
+                            SizedBox(height: 20.0),
+                            Text(
+                              'Get to the safe zone',
+                              style: kTitleStyle,
+                            ),
+                            SizedBox(height: 15.0),
+                            Text(
+                              'Safety of human is the top priority, get to a local emergency evacuation area',
                               style: kSubtitleStyle,
                             ),
                           ],
