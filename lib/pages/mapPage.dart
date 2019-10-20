@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:android_intent/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -26,6 +27,18 @@ class _MapState extends State<MapPage> {
     fillColor: Colors.redAccent
   )]);
 
+  _handleIntent(LatLng latlng){
+    String origin=latlng.latitude.toString() +","+latlng.longitude.toString();  // lat,long like 123.34,68.56
+    String destination="12.9359523,77.6182877";
+    final AndroidIntent intent = new AndroidIntent(
+          action: 'action_view',
+          data: Uri.encodeFull(
+              "https://www.google.com/maps/dir/?api=1&origin=" +
+                  origin + "&destination=" + destination + "&travelmode=driving&dir_action=navigate"),
+          package: 'com.google.android.apps.maps');
+      intent.launch();
+
+  }
 
   LatLng _lastMapPosition = _center;
 
@@ -39,15 +52,18 @@ class _MapState extends State<MapPage> {
     });
   }
 
+
   Future _onAddMarkerButtonPressed() async {
     setState(() {
+
       circles.add(Circle(
           circleId: CircleId("1232344"),
           center: LatLng(12.8800000,77.6200000),
           radius: 200,
           strokeWidth: 3,
           strokeColor: Colors.red,
-          fillColor: Colors.redAccent
+          fillColor: Colors.redAccent,
+
       ));
 
       circles.add(Circle(
@@ -58,6 +74,8 @@ class _MapState extends State<MapPage> {
           strokeColor: Colors.red,
           fillColor: Colors.redAccent
       ));
+
+
       _markers.add(Marker(
         // This marker id can be anything that uniquely identifies each marker.
         markerId: MarkerId(_lastMapPosition.toString()),
@@ -67,6 +85,7 @@ class _MapState extends State<MapPage> {
           snippet: '5 Star Rating',
         ),
         icon: BitmapDescriptor.defaultMarker,
+
       ));
 
       _markers.add(Marker(
@@ -90,6 +109,8 @@ class _MapState extends State<MapPage> {
         ),
         icon: BitmapDescriptor.defaultMarker,
       ));
+
+
 
     });
   }
@@ -129,6 +150,7 @@ class _MapState extends State<MapPage> {
               markers: _markers,
               onCameraMove: _onCameraMove,
               circles: circles,
+              onTap: _handleIntent,
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
