@@ -17,6 +17,16 @@ class _MapState extends State<MapPage> {
 
   final Set<Marker> _markers = {};
 
+  Set<Circle> circles = Set.from([Circle(
+    circleId: CircleId("1234"),
+    center: LatLng(12.8903909, 77.6421465),
+    radius: 200,
+    strokeWidth: 3,
+    strokeColor: Colors.red,
+    fillColor: Colors.redAccent
+  )]);
+
+
   LatLng _lastMapPosition = _center;
 
   MapType _currentMapType = MapType.normal;
@@ -31,6 +41,23 @@ class _MapState extends State<MapPage> {
 
   Future _onAddMarkerButtonPressed() async {
     setState(() {
+      circles.add(Circle(
+          circleId: CircleId("1232344"),
+          center: LatLng(12.8800000,77.6200000),
+          radius: 200,
+          strokeWidth: 3,
+          strokeColor: Colors.red,
+          fillColor: Colors.redAccent
+      ));
+
+      circles.add(Circle(
+          circleId: CircleId("134232344"),
+          center: LatLng(12.8400000,77.6089965),
+          radius: 200,
+          strokeWidth: 3,
+          strokeColor: Colors.red,
+          fillColor: Colors.redAccent
+      ));
       _markers.add(Marker(
         // This marker id can be anything that uniquely identifies each marker.
         markerId: MarkerId(_lastMapPosition.toString()),
@@ -41,6 +68,29 @@ class _MapState extends State<MapPage> {
         ),
         icon: BitmapDescriptor.defaultMarker,
       ));
+
+      _markers.add(Marker(
+        // This marker id can be anything that uniquely identifies each marker.
+        markerId: MarkerId("12345"),
+        position: LatLng(12.8800000,77.6200000),
+        infoWindow: InfoWindow(
+          title: 'Really cool place',
+          snippet: '5 Star Rating',
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      ));
+
+      _markers.add(Marker(
+        // This marker id can be anything that uniquely identifies each marker.
+        markerId: MarkerId("1238795"),
+        position: LatLng(12.8400000,77.6089965),
+        infoWindow: InfoWindow(
+          title: 'Really cool place',
+          snippet: '5 Star Rating',
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      ));
+
     });
   }
 
@@ -78,6 +128,7 @@ class _MapState extends State<MapPage> {
               mapType: _currentMapType,
               markers: _markers,
               onCameraMove: _onCameraMove,
+              circles: circles,
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
